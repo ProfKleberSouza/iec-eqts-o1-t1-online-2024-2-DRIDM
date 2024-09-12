@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "30b1d468-eda2-4316-aa4f-5d81b0c5cdd9",
+		"name": "Serverest - Teste de integração",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37728370",
+		"_collection_link": "https://grey-desert-79196.postman.co/workspace/Teste-de-API~ac55bdf4-8c11-494b-b33f-ea29d3b87603/collection/37728370-30b1d468-eda2-4316-aa4f-5d81b0c5cdd9?action=share&source=collection_link&creator=37728370"
+	},
+	"item": [
+		{
+			"name": "Cadastrar produto",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Produto Teste Integração\",\r\n  \"preco\": 150,\r\n  \"descricao\": \"Descrição do Produto Teste Integração\",\r\n  \"quantidade\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/produtos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listagem de produtos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Produto deve ser listado após cadastro\", function () {\r",
+							"  const produtos = pm.response.json().produtos;\r",
+							"  const produtoCadastrado = produtos.find(produto => produto.nome === \"Produto Teste Integração\");\r",
+							"  pm.expect(produtoCadastrado).to.not.be.undefined;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/produtos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
