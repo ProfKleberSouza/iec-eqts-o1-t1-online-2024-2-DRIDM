@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "3b60dbf4-c0f7-428a-b930-da06ff1cb55b",
+		"name": "ServeRest - Teste de segurança",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37728370",
+		"_collection_link": "https://grey-desert-79196.postman.co/workspace/Teste-de-API~ac55bdf4-8c11-494b-b33f-ea29d3b87603/collection/37728370-3b60dbf4-c0f7-428a-b930-da06ff1cb55b?action=share&source=collection_link&creator=37728370"
+	},
+	"item": [
+		{
+			"name": "Cadastrar produto - Sem token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Deve retornar erro de autenticação\", function () {\r",
+							"  pm.response.to.have.status(401);\r",
+							"  pm.response.to.have.jsonBody(\"message\", \"Token de acesso ausente, inválido, expirado ou usuário do token não existe mais\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Produto Teste\",\r\n  \"preco\": 100,\r\n  \"descricao\": \"Descrição do Produto Teste\",\r\n  \"quantidade\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/produtos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar produto - Token inválido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Deve retornar erro de autenticação\", function () {\r",
+							"  pm.response.to.have.status(401);\r",
+							"  pm.response.to.have.jsonBody(\"message\", \"Token de acesso ausente, inválido, expirado ou usuário do token não existe mais\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Produto Teste\",\r\n  \"preco\": 100,\r\n  \"descricao\": \"Descrição do Produto Teste\",\r\n  \"quantidade\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/produtos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idUsuario",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idProduto",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
